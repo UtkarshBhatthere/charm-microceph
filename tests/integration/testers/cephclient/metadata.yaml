@@ -1,0 +1,19 @@
+# Copyright 2023 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: cephclient-requirer-mock
+summary: Test charm for microceph
+maintainer: Openstack Charmers <openstack-charmers@lists.ubuntu.com>
+description: |
+  Test charm to verify microceph charm
+bases:
+  - name: ubuntu
+    channel: 22.04/stable
+tags:
+  - microceph
+  - storage
+  - misc
+
+requires:
+  ceph:
+    interface: ceph-client

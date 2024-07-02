@@ -1,0 +1,60 @@
+# Copyright 2023 Canonical Ltd.
+# See LICENSE file for licensing details.
+
+name: microceph
+display-name: microceph
+docs: https://discourse.charmhub.io/t/microceph-docs-index/12973
+summary: MicroCeph is snap-deployed Ceph with built-in clustering
+maintainer: Openstack Charmers <openstack-charmers@lists.ubuntu.com>
+description: |
+  MicroCeph is a lightweight way of deploying a Ceph cluster designed
+  to provide excellent performance, reliability, and scalability.
+bases:
+  - name: ubuntu
+    channel: 22.04/stable
+tags:
+  - microceph
+  - storage
+  - misc
+
+extra-bindings:
+  # Cluster public services bind to this space for consumption by Ceph clients
+  public:
+  # Cluster internal services bind to this space.
+  cluster:
+  # MicroCeph daemon binds to this space.
+  admin:
+
+provides:
+  ceph:
+    interface: ceph-client
+  radosgw:
+    interface: ceph-radosgw
+  mds:
+    interface: ceph-mds
+
+requires:
+  traefik-route-rgw:
+    interface: traefik_route
+    optional: true
+  identity-service:
+    interface: keystone
+    optional: true
+
+peers:
+  peers:
+    interface: ceph-peer
+
+storage:
+  # Charm enrolls the provisioned storage devices as OSDs.
+  osd-standalone:
+    type: block
+    multiple:
+      range: 0-
+    minimum-size: 2G
+
+  # Juju can provision storage, but charm will not perform any action.
+  manual:
+    type: block
+    multiple:
+      range: 0-

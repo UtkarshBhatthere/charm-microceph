@@ -1,0 +1,42 @@
+options:
+  snap-channel:
+    default: "reef/stable"
+    type: string
+    description: |
+      The snap-channel option determines the MicroCeph snap that is
+      being installed via charm. Change this option to perform an
+      upgrade of MicroCeph. See https://charmhub.io/microceph for
+      details on the upgrade process.
+  default-pool-size:
+    default: 3
+    type: int
+    description: |
+      The default replication factor for pools. Note that changing
+      this value only sets the default value; it doesn't change
+      the replication factor for existing pools.
+  enable-rgw:
+    default: ""
+    type: string
+    description: |
+      Supported values for this option are
+      "*" - Enable RGW on all storage nodes
+      ""  - Disable RGW on all storage nodes
+  region:
+    default: RegionOne
+    description: Name of the OpenStack region
+    type: string
+  namespace-projects:
+    type: boolean
+    default: False
+    description: |
+      Enable project namespacing. If project namespacing is enabled, keystone
+      projects will be implicitly added to a matching project in radosgw, in
+      addition to updating the catalog URL to allow radosgw to support
+      publicly-readable containers and temporary URLS. This namespacing
+      also allows multiple projects to create buckets with the same names,
+      as the bucket names are namespaced into the project namespaces in the
+      RADOS gateway.
+
+      This configuration option will not be enabled on a charm upgrade, and
+      cannot be toggled on in an existing installation as it will remove
+      tenant access to existing buckets.
