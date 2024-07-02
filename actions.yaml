@@ -1,0 +1,34 @@
+list-disks:
+  description: |
+    List OSDs on the cluster and unpartitioned disks on the
+    node.
+add-osd:
+  description: |
+    Add ceph disks (OSD) to cluster
+  params:
+    loop-spec:
+      type: string
+      description: /
+        The specification of the files to be created and used as OSDs,
+        e.g. 4G,3 would create 3 file based OSDs of size 4GB.
+    device-id:
+      type: string
+      description: |
+        Device ID of the disk. Accepts comma separated
+        device id's to specify multiple disks
+  additionalProperties: false
+set-pool-size:
+  description: |
+    Sets the size for one or several pools.
+  params:
+    pools:
+      type: string
+      description: |
+        A comma-separated list of pools, or an asterisk ('*') to set
+        the size for every existing pool.
+    size:
+      type: integer
+      description: The new pool size
+  required:
+    - pools
+    - size
